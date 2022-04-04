@@ -1,26 +1,86 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="./appstore.css" />
+    <script type="text/javascript" src="./jquery-1.11.3.min.js"></script>
+    <title>넷츠 앱 다운로드</title>
+    <script type="text/javascript">
+        function OnClickDownApp(appID) {
+            var os = getMobileOperatingSystem();
+            if (os == "iOS") {
+                OnClickDownIOS(appID);
+            }
+            else {
+                OnClickDownAndroid(appID);
+            }
+        }
 
-  <title>OTA Ad-Hoc Install Page</title>
-        <style>
-                li {margin: 10px;}
-        </style>
+        function OnClickDownAndroid(appID) {
+            if (appID == "NetsAuthenticator") {
+                location.href = "/nets-authenticator.apk";
+            }
+            
+        }
+
+        function OnClickDownIOS(appID) {
+            // Verisign 공인 SSL 인증서가 아니면 다운로드가 되지 않음(아마 Apple을 통해 URL 검사 후 다운로드 하는 듯)
+            if (appID == "NetsAuthenticator") {
+                location.href = "itms-services://?action=download-manifest&url=https://romad.github.io/nets-authenticator.plist";
+            }
+        }
+
+        /**
+         * Determine the mobile operating system.
+         * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+         *
+         * returns {String}
+         */
+        function getMobileOperatingSystem() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // Windows Phone must come first because its UA also contains "Android"
+            if (/windows phone/i.test(userAgent)) {
+                return "Windows Phone";
+            }
+
+            if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+
+            // iOS detection from: http://stackoverflow.com/a/9039885/177710
+            //if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            if (/iPad|iPhone|iPod|Macintosh/.test(userAgent) && !window.MSStream) {
+                return "iOS";
+            }
+
+            return "unknown";
+        }
+    </script>
 </head>
 <body>
-<p>
-이 페이지는 비공개 앱 OTA 테스트(Closed OTA Test) 페이지 입니다.
-<font color="red">디바이스 권한의 없으면 OTA를 설치할 수 없습니다.  </font>
-<br/>
-
-</p>
-  <ul>
-        <li><a href="itms-services://?action=download-manifest&url=https://romad.github.io/menifest.plist">MARSH_UAT2(Objective-C, uat2) OTA 설치</a></li>
-  </ul>
-  </ul>
- 
+        <div class="mobile-wrapper">
+                <div class="contents">
+                        <div class="bnr">
+                        <h1 class="bnr-title-wrap">
+                                <span class="bnr-title1">한일</span>
+                                <span class="bnr-title2">앱 다운로드</span>
+                        </h1>
+                        </div>
+                        <!-- App List -->
+                        <ul class="list-app">
+                        <li class="app-item">
+                                <i class="app-img"><img src="../../Resources/appDownload/img/appicon/appico_gw.png"></i>
+                                <div class="app-item-info">
+                                <div class="app-name">
+                                        <a class="app-anchor" href="#">모바일 그룹웨어</a>
+                                </div>
+                                <div class="app-ver">Ver 3.0.60</div>
+                                </div>
+                                <button id="btn_install_hanilmgw" class="btn btn-txt-default" onclick="OnClickDownApp('NetsAuthenticator')">설치</button>
+                        </li>
+                        </ul>
+                </div>
+        </div>
 </body> 
 </html>
