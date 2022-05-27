@@ -17,15 +17,18 @@
         }
 
         function OnClickDownAndroid(appID) {
-            if (appID == "NetsAuthenticator") {
+            if (appID == "NetsPass") {
+                location.href = "/nets-authenticator-release.apk";
+            } else if(appID == "NetsNative") {
+                location.href = "/nets-authenticator.apk";
+            } else if(appID == "NetsHybrid") {
                 location.href = "/nets-authenticator.apk";
             }
-            
         }
 
         function OnClickDownIOS(appID) {
             // Verisign 공인 SSL 인증서가 아니면 다운로드가 되지 않음(아마 Apple을 통해 URL 검사 후 다운로드 하는 듯)
-            if (appID == "NetsAuthenticator") {
+            if (appID == "NetsPass") {
                 location.href = "itms-services://?action=download-manifest&url=https://romad.github.io/menifest.plist";
             }
         }
@@ -73,11 +76,31 @@
                                 <i class="app-img"><img src="./img/ic_launcher.png"></i>
                                 <div class="app-item-info">
                                 <div class="app-name">
-                                        <a class="app-anchor" href="#">넷츠 인증 앱</a>
+                                        <a class="app-anchor" href="#">NETS PASS</a>
                                 </div>
                                 <div class="app-ver">Ver 1.0.0</div>
                                 </div>
-                                <button id="btn_install_hanilmgw" class="btn btn-txt-default" onclick="OnClickDownApp('NetsAuthenticator')">설치</button>
+                                <button id="btn_install_hanilmgw" class="btn btn-txt-default" onclick="OnClickDownApp('NetsPass')">설치</button>
+                        </li>
+                        <li class="app-item">
+                            <i class="app-img"><img src="./img/ic_launcher.png"></i>
+                            <div class="app-item-info">
+                            <div class="app-name">
+                                    <a class="app-anchor" href="#">NETS Native</a>
+                            </div>
+                            <div class="app-ver">Ver 1.0.0</div>
+                            </div>
+                            <button id="btn_install_hanilmgw" class="btn btn-txt-default" onclick="OnClickDownApp('NetsNative')">설치</button>
+                        </li>
+                        <li class="app-item">
+                            <i class="app-img"><img src="./img/ic_launcher.png"></i>
+                            <div class="app-item-info">
+                            <div class="app-name">
+                                    <a class="app-anchor" href="#">NETS Hybrid</a>
+                            </div>
+                            <div class="app-ver">Ver 1.0.0</div>
+                            </div>
+                            <button id="btn_install_hanilmgw" class="btn btn-txt-default" onclick="OnClickDownApp('NetsHybrid')">설치</button>
                         </li>
                         </ul>
                 </div>
