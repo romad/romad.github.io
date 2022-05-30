@@ -6,6 +6,22 @@
     <script type="text/javascript" src="./jquery-1.11.3.min.js"></script>
     <title>넷츠 앱 다운로드</title>
     <script type="text/javascript">
+        var androidAppz = {
+            "NetsPass":{
+                apk: "/nets-authenticator.apk",
+                scheme:"nets-sso",
+                packageName:"kr.co.nets.authenticator"
+            },   
+            "NetsNative":{
+                apk:"/nets-demo-native.apk",
+                scheme:"nets-demo-native",
+                packageName:"nets.sso.mobile.app.nativeapp"},
+            "NetsHybrid":{
+                apk:"/nets-demo-hybrid.apk",
+                scheme:"nets-demo-hybrid",
+                packageName:"nets.sso.mobile.app"
+            }
+        }
         function OnClickDownApp(appID) {
             var os = getMobileOperatingSystem();
             if (os == "iOS") {
@@ -17,13 +33,7 @@
         }
 
         function OnClickDownAndroid(appID) {
-            if (appID == "NetsPass") {
-                location.href = "/nets-authenticator-release.apk";
-            } else if(appID == "NetsNative") {
-                location.href = "/nets-demo-native.apk";
-            } else if(appID == "NetsHybrid") {
-                location.href = "/nets-demo-hybrid.apk";
-            }
+            checkAppInstall(appID)
         }
 
         function OnClickDownIOS(appID) {
@@ -59,6 +69,30 @@
 
             return "unknown";
         }
+
+        function checkAppInstall(appID) {
+            function clearTimers() {
+                clearInterval(heartbeat)
+                clearTimeout(timer)
+            }
+
+            function intervalHeartbeat() {
+                if(document.webkitHidden || document.hidden){
+                    clearTimers();
+                    console.log('앱이 설치 되어 있습니다.');
+                    var scheme = androidAppz[appId].scheme;
+                    var packageName = androidAppz[appId].packageName;
+                    location.href = "intent://" + "#Intent;scheme=" + scheme + ";package=" + packageName + ";end"
+                }
+            }
+            heartbeat = setInterval(intervalHeartbeat, 200);
+            var deLay = 1000;
+            timer = setTimeout(function() {
+                console.log("앱이 없습니다.")
+                location.href = androidAppz[appId].apk
+            }, deLay);
+        }
+
     </script>
 </head>
 <body>
